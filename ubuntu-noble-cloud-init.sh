@@ -22,7 +22,10 @@ IMG_NAME=noble-server-cloudimg-amd64.img
 DISK_SIZE=32G
 
 set -x
-rm -f $IMG_NAME
+if [ -f $IMG_NAME ]; then
+    echo "Old $IMG_NAME found! Removing.." && rm -f $IMG_NAME
+fi
+
 wget -q https://cloud-images.ubuntu.com/noble/current/$IMG_NAME
 qemu-img resize $IMG_NAME $DISK_SIZE
  qm destroy $VMID
